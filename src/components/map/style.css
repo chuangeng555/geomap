@@ -1,0 +1,26 @@
+.map {
+    /*width: 500px;*/
+    position:absolute;
+    left: 20%;
+    bottom: 20%;
+    /*margin-top: 5%;
+    margin-left: 5%;
+    margin-right: auto;*/
+    height: 72%;
+    width: 60%;
+  }
+
+
+  .popup {  
+    position: absolute;  
+    width: 60%;   
+    height: 60%; 
+    left: 10%;  
+    right: 10%;  
+    top: 0%;  
+    bottom: 0%; 
+    margin: auto;  
+    background-color: white;
+    font-weight: bold;
+    z-index: 999999;
+  }  
