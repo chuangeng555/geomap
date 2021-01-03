@@ -1,33 +1,32 @@
-
-
 .map {
     /*width: 500px;*/
     position:absolute;
-    left: 20%;
-    bottom: 20%;
+    left: 0%;
+    bottom: 0%;
     /*margin-top: 5%;
     margin-left: 5%;
     margin-right: auto;*/
-    height: 72%;
-    width: 60%;
+    height: 100%;
+    width: 100%;
 }
 
 .searchBar{
   position:absolute;
-  top: 10%;
+  top: 2%;
+  right: 2%;
   background-color: white;
   margin: auto;  
   z-index: 99999;
 }
 
 .popup {  
-  position: absolute;  
-  width: 60%;   
+  position: relative;  
+  width: 40%;   
   height: 60%; 
-  left: 10%;  
-  right: 10%;  
-  top: 0%;  
-  bottom: 0%; 
+  /*left: 5%;  */
+  right: 0%;  
+  top: 20%; 
+  /*bottom: 0%; */
   margin: auto;  
   background-color: #ec407a;
   font-weight: bold;
