@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import 'leaflet/dist/leaflet.css';
 import axios from "axios";
-//import L from 'leaflet';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import './style.css';
 import { Map, TileLayer, FeatureGroup, Marker } from 'react-leaflet';
@@ -80,7 +79,6 @@ export class Usermap extends Component {
 
     togglePopupOpen = () => {
         this.setState({showPopup: true})
-        
 
     }
 
@@ -118,6 +116,8 @@ export class Usermap extends Component {
             this.displayTopQuery(res.data.results);    
         })
 
+
+        //db
         axios.get(db).then((res) => {
             //console.log(res.data)
             this.setState({
@@ -130,8 +130,6 @@ export class Usermap extends Component {
         //console.log(event.target.value)
         this.setState({descriptionChange: event.target.value})
       }
-
-          
 
 
 
@@ -154,7 +152,7 @@ export class Usermap extends Component {
             onChange={this.onSearchChange}
             onClick = {this.toggleSearchClose}
             onSubmit = {this.searchSubmit}
-            ></Search> 
+            />
             : null }
 
             {this.state.showPopup && this.state.createdMarkerPositon ?
@@ -171,7 +169,7 @@ export class Usermap extends Component {
             </Marker>
             : null }
 
-            {this.state.dbGeoData ? <ExistingMarkers geo_venues={this.state.dbGeoData}/> : null}
+            {this.state.dbGeoData ? <ExistingMarkers geo_venues={this.state.dbGeoData} /> : null}
 
 
             <TileLayer
@@ -183,18 +181,24 @@ export class Usermap extends Component {
                         position='topleft'
 						onEdited={this._onEdited}
 						onCreated={this._onCreated}
-                        onDeleted={this._onDeleted}
-                        onDeleteStart = {this._onDeleteStart}
+                        // onDeleted={this._onDeleted}
+                        // onDeleteStart = {this._onDeleteStart}
 						draw={{
 						rectangle: false,
-						marker:  {
-                            icon: VenueLocationIcon
-                        },
-						circle: false,
+						// marker:  {
+                        //     icon: VenueLocationIcon
+                        // },
+                        marker: false,
+                        circle: false,
 						polyline: false,
                         circlemarker: false,
-                        //remove: true
+                        remove: false,
+                        polygon: false,
 						}}
+                        edit={{
+                            edit: false,
+                            remove: false,
+                        }}
 						/>
 					</FeatureGroup>
             </Map>

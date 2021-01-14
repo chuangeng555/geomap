@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 require('dotenv').config()
 
+
 const db = "http://localhost:8080/api/v1/locations";
 
 export default class FormPopup extends Component {
@@ -10,12 +11,11 @@ export default class FormPopup extends Component {
       super(props);
       this.state = {
         markerName: props.nameValue,
-        markerDescription: null, 
+        markerDescription: null,
+        markerSummary: null,
       }
   }
 
-
-      
   onLocationNameChange = (event) => { 
     this.setState({markerName: event.target.value})
   }
@@ -24,17 +24,56 @@ export default class FormPopup extends Component {
     this.setState({markerDescription: event.target.value})
   }
 
+  onSummaryChange = (event) => {
+    this.setState({markerSummary: event.target.value})
+  }
+
+
   postDetails = (e) => {
-    axios.post(db, {
-    "locationName": this.state.markerName,
-    "description": this.state.markerDescription,
-    "geoLocation": this.props.tempMarkerPosition
-    }).then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
+    //check if the location already exist data or not
+    
+    console.log(this.props.tempMarkerPosition.toString())
+
+    axios.get(db + "/geo/" + this.props.tempMarkerPosition.toString()).then((response) => {
+
+      if (response.data.data.length === 0 ) {
+        //post req
+        axios.post(db, {
+          "locationName": this.state.markerName,
+          "geoLocation": this.props.tempMarkerPosition,
+            "locationData": {
+            "description": this.state.markerDescription,
+              "summary" : this.state.markerSummary
+            }
+          }).then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+      } else {
+        //append to id
+
+        let id = response.data.data[0]._id;
+
+        //console.log(id);
+
+        axios.patch(db + '/' + id, {
+          "description": this.state.markerDescription,
+          "summary" : this.state.markerSummary
+        }).then((response) => {
+          console.log(response)
+        }).catch((error) => {
+          console.log(error)
+        })
+
+      }
+
     });
+
+    //e.preventDefault();
+
   }
 
 
@@ -45,25 +84,27 @@ export default class FormPopup extends Component {
 
     const { onClick , createdMarker} = this.props; //onChange
 
-
-
     return (
       <div className="popup">
-        <Button
-          id="close"
-          variant="contained"
-          color="secondary"
-          type="submit"
-          onClick={onClick}
-        >
-          X
-        </Button>
-        <form className="form" onSubmit={this.postDetails}>
-          Name of location: <input type="text" name="name" value={this.state.markerName} onChange={e => {this.onLocationNameChange(e)}}/>
-          {/*onChange={onChange}*/}
-          Description : <textarea id="description" value={this.state.markerDescription} onChange={e => {this.onDescriptionChange(e)}} ></textarea>
-          <input type="submit" value="Submit" />
-        </form>
+        <div>
+          <Button
+            id="close"
+            variant="contained"
+            color="secondary"
+            type="submit"
+            onClick={onClick}
+          >
+            X
+          </Button>
+          <form className="form" onSubmit={this.postDetails}>
+          {/*onChange={e => {this.onLocationNameChange(e)}}*/}
+            <h3>{this.state.markerName}</h3>
+            <input type="hidden" name="name" value={this.state.markerName}/>
+            Summary : <textarea id="summary" value={this.state.markerSummary} onChange={e => {this.onSummaryChange(e)}} ></textarea>
+            Description : <textarea id="description" value={this.state.markerDescription} onChange={e => {this.onDescriptionChange(e)}} ></textarea>
+            <input type="submit" value="Submit" />
+          </form>
+          </div>
       </div>  
     );
     
