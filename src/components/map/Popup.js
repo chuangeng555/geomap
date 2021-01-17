@@ -72,7 +72,6 @@ export default class FormPopup extends Component {
 
     });
 
-    e.preventDefault();
 
   }
 
