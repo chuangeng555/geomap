@@ -1,6 +1,6 @@
 # Map App
 
-In progress..... MVP is live, CLICK [HERE](http://geomap-frontend.s3-website-ap-southeast-1.amazonaws.com)
+In progress..... MVP is live, CLICK [HERE](http://geomap-frontend.s3-website-ap-southeast-1.amazonaws.com) ! 
 
 Use case: To search for geo location and write your review on the location
 
