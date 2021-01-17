@@ -13,7 +13,7 @@ import ExistingMarkers from './ExistingMarkers';
 const default_query = "revenue";
 
 
-const db = "http://localhost:8080/api/v1/locations";
+const db = process.env.REACT_APP_DB;
 
 
 export class Usermap extends Component {

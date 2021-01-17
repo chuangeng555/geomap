@@ -9,13 +9,18 @@ export default class Search extends Component{
          
         return(
             <div className="popup"> 
+
+            <div id = "search-close-button">
+                <Button
+                variant="contained"
+                color="secondary"
+                onClick = {onClick} 
+                >X</Button> {" "}
+            </div>
+            
+            <h1>Search <br></br> Locations {" "}</h1>
+
             <form>
-            <Button
-            variant="contained"
-            color="secondary"
-            onClick = {onClick} 
-            ></Button> 
-            Search {" "}
             <input type="text" value={value} onChange={onChange}  />
             </form>
             {list.filter((onChange) => (item) => item.SEARCHVAL.toLowerCase().includes(onChange.toLowerCase())).map((item, k) => (
@@ -24,6 +29,7 @@ export default class Search extends Component{
                 <button onClick={() => onSubmit({item})}> Submit </button>
             </div>
             ))}
+            
             </div>
         );
     }

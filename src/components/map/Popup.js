@@ -4,15 +4,15 @@ import axios from "axios";
 require('dotenv').config()
 
 
-const db = "http://localhost:8080/api/v1/locations";
+const db = process.env.REACT_APP_DB;
 
 export default class FormPopup extends Component {
     constructor(props) {
       super(props);
       this.state = {
         markerName: props.nameValue,
-        markerDescription: null,
-        markerSummary: null,
+        markerDescription: '',
+        markerSummary: '',
       }
   }
 
@@ -72,7 +72,7 @@ export default class FormPopup extends Component {
 
     });
 
-    //e.preventDefault();
+    e.preventDefault();
 
   }
 
@@ -82,7 +82,7 @@ export default class FormPopup extends Component {
 
   render() {
 
-    const { onClick , createdMarker} = this.props; //onChange
+    const { onClick } = this.props; //onChange
 
     return (
       <div className="popup">

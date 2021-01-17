@@ -5,7 +5,9 @@ import LocationDetailsList from "./LocationDetailsList";
 import axios from "axios";
 require('dotenv').config()
 
-const db = "http://localhost:8080/api/v1/locations";
+
+
+const db = process.env.REACT_APP_DB;
 
 
 const MarkerPopup = (props) => {
@@ -15,7 +17,7 @@ const MarkerPopup = (props) => {
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
 
-  const { data, buttonState, openStatus } = props;
+  const { data, buttonState } = props;
 
   const handleSubmit = (e) => {
 

@@ -19,6 +19,7 @@
   z-index: 99999;
 }
 
+
 .popup {  
   position: relative;  
   width: 40%;   
@@ -34,6 +35,10 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   z-index: 999;
 }  
+
+#search-close-button{
+  position:absolute; top:0; right:0;
+}
 
 
 #datapopup {

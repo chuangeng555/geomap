@@ -5,8 +5,6 @@ import { DataGrid } from '@material-ui/data-grid';
 
 
 
-
-
 const columns = [
     
     { field: 'summary', headerName: 'Summary',  width: 130 },
