@@ -18,15 +18,15 @@ export default class Search extends Component{
                 >X</Button> {" "}
             </div>
             
-            <h1>Search <br></br> Locations {" "}</h1>
+            <h2>Search <br></br> Locations {" "}</h2>
 
             <form>
             <input type="text" value={value} onChange={onChange}  />
             </form>
             {list.filter((onChange) => (item) => item.SEARCHVAL.toLowerCase().includes(onChange.toLowerCase())).map((item, k) => (
-            <div key = {k}>
+            <div className="locationList" key = {k}>
                 <span>{item.ADDRESS}</span> {" "}
-                <button onClick={() => onSubmit({item})}> Submit </button>
+                <Button color="primary" variant="contained" onClick={() => onSubmit({item})}> Select </Button>
             </div>
             ))}
             

@@ -5,6 +5,8 @@ require('dotenv').config()
 
 
 const db = process.env.REACT_APP_DB;
+//const db = 'https://0ihrzn8o0k.execute-api.ap-southeast-1.amazonaws.com/final'
+
 
 export default class FormPopup extends Component {
     constructor(props) {
@@ -31,14 +33,15 @@ export default class FormPopup extends Component {
 
   postDetails = (e) => {
     //check if the location already exist data or not
-    
+    console.log(e)
     console.log(this.props.tempMarkerPosition.toString())
 
-    axios.get(db + "/geo/" + this.props.tempMarkerPosition.toString()).then((response) => {
+    axios.get(db + "/locations/geo/" + this.props.tempMarkerPosition.toString()).then((response) => {
 
-      if (response.data.data.length === 0 ) {
+      if (response.data.data.length === 0 ) { //if nvr exist b4 
         //post req
-        axios.post(db, {
+        console.log(response.data)
+        axios.post(db + "/locations", {
           "locationName": this.state.markerName,
           "geoLocation": this.props.tempMarkerPosition,
             "locationData": {
@@ -52,14 +55,15 @@ export default class FormPopup extends Component {
             console.log(error);
           });
 
+
       } else {
-        //append to id
+        //if exist b4, append to id
 
         let id = response.data.data[0]._id;
 
         //console.log(id);
 
-        axios.patch(db + '/' + id, {
+        axios.patch(db + '/locations/' + id, {
           "description": this.state.markerDescription,
           "summary" : this.state.markerSummary
         }).then((response) => {
@@ -68,7 +72,9 @@ export default class FormPopup extends Component {
           console.log(error)
         })
 
+
       }
+
 
     });
 
@@ -101,6 +107,8 @@ export default class FormPopup extends Component {
             <input type="hidden" name="name" value={this.state.markerName}/>
             Summary : <textarea id="summary" value={this.state.markerSummary} onChange={e => {this.onSummaryChange(e)}} ></textarea>
             Description : <textarea id="description" value={this.state.markerDescription} onChange={e => {this.onDescriptionChange(e)}} ></textarea>
+            {/*<input color="primary" variant="contained" type="submit" value="Submit" />*/}
+            {/*<Button color="primary" variant="contained">Submit</Button> */}
             <input type="submit" value="Submit" />
           </form>
           </div>

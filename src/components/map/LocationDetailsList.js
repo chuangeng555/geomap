@@ -1,29 +1,25 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { DataGrid } from '@material-ui/data-grid';
-
-
-
-
-
+import LocationDetail from './LocationDetail';
+import { Redirect, useHistory } from "react-router-dom";
 const columns = [
-    
-    { field: 'summary', headerName: 'Summary',  width: 130 },
+    { field: 'summary', headerName: 'Summary',  width: 150 },
     { field: 'create_date', headerName: 'Date Created', width: 200 }
   ];
 
 
 
-export default class LocationDetailsList extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            dataArray : null,
-            openInfo: false, 
-        }
-    }
+export default function LocationDetailsList(props){
+    const [dataArray, setDataArray] = useState(null)
+    const [openDetailsBoolean, setOpenDetailsBoolean] = useState(false)
+    const [openSingleDetail, setOpenSingleDetail] =  useState(false)
 
-    componentDidMount(){
+  const { locationData, id  } = props;
+  let history = useHistory();
 
+
+
+    useEffect(() => {
         const dateFormat = (date) => {
 
             let day = date.getDate();
@@ -49,12 +45,12 @@ export default class LocationDetailsList extends Component {
           }
 
 
-        const templocationData = this.props.locationData.locationData
+        const templocationData = locationData.locationData
 
         const output = [...templocationData.map((item) => {
 
             var date = new Date(item.create_date);
-
+            
             return {
                 id: item._id,
                 summary: item.summary,
@@ -63,24 +59,30 @@ export default class LocationDetailsList extends Component {
             }
         })]
 
-        console.log(output)
 
-        this.setState({
-            dataArray: output
-        })
+        setOpenDetailsBoolean(true) 
+        setDataArray(output)
+
+    }, [locationData.locationData])
+
+    function test(e){
+        
+        //console.log(e.data.id) //small
+        //console.log(id) //overall 
+        //go root than search for inside
+        history.push(`/content/${id}/${e.data.id}`) 
+    
     }
-
-    render(){
 
         return (
             <div id="datapopup" className="popup">
                 <div style={{ height: 400, width: '100%' }}>
-                    {this.state.dataArray ? <DataGrid style={{width: '100%'}} rows={this.state.dataArray} columns={columns}  pageSize={5} rowsPerPageOptions={[5, 10]} disableColumnMenu={true} onRowSelected={(e) => console.log(e)}/> : null}
+                    {openDetailsBoolean ? <DataGrid style={{width: '200%'}} rows={dataArray} columns={columns}  pageSize={5} rowsPerPageOptions={[5, 10]} disableColumnMenu={true} onRowSelected={(e) => {test(e)}}/> : ""}
                 </div>
             </div>
+
             
         )
-    }
     
 }
 

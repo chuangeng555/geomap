@@ -9,11 +9,14 @@ import { VenueLocationIcon }  from './VenueLocationIcon';
 import FormPopup from './Popup.js';
 import Search from './Search.js';
 import ExistingMarkers from './ExistingMarkers';
+import Button from "@material-ui/core/Button";
+
 
 const default_query = "revenue";
 
 
 const db = process.env.REACT_APP_DB;
+//const db = 'https://0ihrzn8o0k.execute-api.ap-southeast-1.amazonaws.com/final'
 
 
 export class Usermap extends Component {
@@ -118,10 +121,11 @@ export class Usermap extends Component {
 
 
         //db
-        axios.get(db).then((res) => {
-            //console.log(res.data)
+        axios.get(db + '/locations').then((res) => {
+            console.log(res.data)
             this.setState({
                 dbGeoData: res.data.data
+                
             })
         })
     }
@@ -142,7 +146,9 @@ export class Usermap extends Component {
         return (
         <div>
             <Map className="map" center={currentLocation} zoom={zoom}> 
-            <button className="searchBar" onClick={this.toggleSearchOpen}> Search </button>
+            <Button className="search" onClick={this.toggleSearchOpen} 
+            variant="contained"
+			color="primary"> Search </Button>
             
             {this.state.showSearch ? 
             <Search
