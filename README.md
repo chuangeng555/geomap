@@ -16,7 +16,9 @@ Click for [HERE](https://github.com/chuangeng555/geo-map-backend) for Backend co
 
 Pending :
 
-- [ ] - Open link in new tab to view full review based on selection in View Data.
+- [ X ] - Open link in new tab to view full review based on selection in View Data.
+
+- [ ] - UIUX, typography issues in content
 
 ## Hosting :
 
