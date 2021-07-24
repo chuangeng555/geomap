@@ -5,6 +5,7 @@ import React, {
 import { Marker } from 'react-leaflet';
 import { VenueLocationIcon } from './VenueLocationIcon';
 import MarkerPopup from './MarkerPopup';
+ 
 
 
 export default class ExistingMarkers extends Component {

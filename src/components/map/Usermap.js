@@ -6,7 +6,7 @@ import './style.css';
 import { Map, TileLayer, FeatureGroup, Marker } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import { VenueLocationIcon }  from './VenueLocationIcon';
-import FormPopup from './Popup.js';
+import FormPopup from './FormPopup.js';
 import Search from './Search.js';
 import ExistingMarkers from './ExistingMarkers';
 import Button from "@material-ui/core/Button";
@@ -155,6 +155,7 @@ export class Usermap extends Component {
             className = "searchBar"
             value={searchTerm}
             list = {result}
+            parentOpen={this.state.showSearch}
             onChange={this.onSearchChange}
             onClick = {this.toggleSearchClose}
             onSubmit = {this.searchSubmit}
@@ -162,11 +163,10 @@ export class Usermap extends Component {
             : null }
 
             {this.state.showPopup && this.state.createdMarkerPositon ?
-            // created from marker   
-             <FormPopup onClick={this.togglePopupClose} createdMarker= {createdMarkerPositon}/> :
-             // created from search bar  
-             this.state.showPopup ? 
-             <FormPopup onClick={this.togglePopupClose} nameValue={tempMarkerInfo} descriptionValue={markerDescription} createdMarker= {createdMarkerPositon} tempMarkerPosition={tempMarkerPosition} />  : null } 
+            
+            <FormPopup onClick={this.togglePopupClose} createdMarker= {createdMarkerPositon}/> :
+
+            this.state.showPopup ?  <FormPopup onClick={this.togglePopupClose} nameValue={tempMarkerInfo} descriptionValue={markerDescription} createdMarker= {createdMarkerPositon} tempMarkerPosition={tempMarkerPosition} />  : null }
 
 
             {/*temporary b4 parse to database --> for show only... */}

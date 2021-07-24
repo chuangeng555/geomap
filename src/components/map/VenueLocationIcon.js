@@ -1,7 +1,10 @@
 import L from "leaflet";
 
+import point from './pin.svg'
+
 export const VenueLocationIcon = L.icon({
-  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
+  iconUrl: point,
+  //iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
   //iconRetinaUrl: require('./venue_location_icon.svg'),
   iconAnchor: null,
   shadowUrl: null,
