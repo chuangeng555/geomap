@@ -60,6 +60,7 @@ export default function Search({parentOpen, value, onChange, list , onClick, onS
   }, [parentOpen])
 
   return (
+    
     <div>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle align='center' id="customized-dialog-title" onClose={handleClose}>

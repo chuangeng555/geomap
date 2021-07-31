@@ -8,6 +8,8 @@ import { EditControl } from 'react-leaflet-draw';
 import { VenueLocationIcon }  from './VenueLocationIcon';
 import FormPopup from './FormPopup.js';
 import Search from './Search.js';
+import SearchButton from './SearchButton.js';
+
 import ExistingMarkers from './ExistingMarkers';
 import Button from "@material-ui/core/Button";
 
@@ -17,6 +19,7 @@ const default_query = "revenue";
 
 const db = process.env.REACT_APP_DB;
 //const db = 'https://0ihrzn8o0k.execute-api.ap-southeast-1.amazonaws.com/final'
+
 
 
 export class Usermap extends Component {
@@ -39,6 +42,9 @@ export class Usermap extends Component {
         }
     }
 
+    
+
+
     onSearchChange = (event) => {
         let { searchTerm } = this.state; 
         this.setState({ searchTerm: event.target.value });
@@ -57,7 +63,7 @@ export class Usermap extends Component {
         //pass geo json here 
         //console.log(e.layer._latlng)
         if (e.layerType === 'marker') {
-            console.log(e.layer._latlng);
+            //console.log(e.layer._latlng);
             this.setState({
                 showPopup: true,
                 createdMarkerPositon: e.layer._latlng,
@@ -85,13 +91,14 @@ export class Usermap extends Component {
 
     }
 
-    toggleSearchOpen = () => {
-        let { showSearch } = this.state; 
-        if (showSearch === true) { 
-            this.setState({showSearch: false})
-        } else {
-            this.setState({showSearch: true})
-        }
+    toggleSearchOpen = (value) => {
+        this.setState({showSearch: value})
+        //let { showSearch } = this.state; 
+        //if (showSearch === true) { 
+        //    this.setState({showSearch: false})
+        //} else {
+        //    this.setState({showSearch: true})
+        //}
     }
 
     toggleSearchClose = () => {
@@ -122,7 +129,6 @@ export class Usermap extends Component {
 
         //db
         axios.get(db + '/locations').then((res) => {
-            console.log(res.data)
             this.setState({
                 dbGeoData: res.data.data
                 
@@ -145,10 +151,13 @@ export class Usermap extends Component {
 
         return (
         <div>
+            
             <Map className="map" center={currentLocation} zoom={zoom}> 
-            <Button className="search" onClick={this.toggleSearchOpen} 
+            {/*<Button className="search" onClick={this.toggleSearchOpen} 
             variant="contained"
-			color="primary"> Search </Button>
+			color="primary"> Search </Button>*/}
+            <SearchButton toggleSearchOpen={this.toggleSearchOpen} showSearch={this.state.showSearch}/> 
+
             
             {this.state.showSearch ? 
             <Search

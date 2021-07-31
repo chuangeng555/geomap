@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import { DataGrid } from '@material-ui/data-grid';
+import { useAuth0 } from "@auth0/auth0-react";
 import Content from './Content';
 import axios from "axios";
 const db = process.env.REACT_APP_DB;
@@ -45,9 +46,12 @@ export default function FullScreenDialog(props) {
   const [date, setDate] = useState("")
   const [payload, setPayload] = useState({})
   const [selectedData, setselectedData] = useState([])
-
   const [isViewButtonDisabled, setisViewButtonDisabled] = useState(true)
   const [isDeleteButtonDisabled, setisDeleteButtonDisabled] = useState(true)
+  const { isAuthenticated } = useAuth0();
+
+
+  const [imageurl, setImageUrl] = useState("")
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -60,7 +64,7 @@ export default function FullScreenDialog(props) {
   const deleteContent = () => {
 
     if (dataArray.length <= 1 || dataArray.length === selectedData.length) { //if less than 1 
-      console.log(id)
+      //console.log(id)
       axios.delete(db + '/locations/' + id).then((response) => {
         console.log(response)
       }).catch((error) => {
@@ -80,7 +84,7 @@ export default function FullScreenDialog(props) {
 
   const deleteLocation = () => { 
     axios.delete(db + '/locations/' + id).then((response) => {
-      console.log(response)
+      //console.log(response)
     }).catch((error) => {
       console.log(error)
     })  
@@ -123,6 +127,7 @@ export default function FullScreenDialog(props) {
         return {
             id: item._id,
             summary: item.summary,
+            imageUrl: item.imageUrl,
             description: item.description,
             create_date: dateFormat(date)
         }
@@ -135,12 +140,13 @@ export default function FullScreenDialog(props) {
 }, [locationData.locationData])
 
   const viewReviewContent = (e) => {
-    console.log(e)
+    //console.log(e)
     setOpenContent(true)
 
     setSummary(e.row.summary)
     setDescription(e.row.description)
     setDate(e.row.create_date)
+    setImageUrl(e.row.imageUrl)
   }
 
   const closeContent = (e) => {
@@ -158,9 +164,11 @@ export default function FullScreenDialog(props) {
       <Button variant="outlined" color="primary" style={{margin: "2px"}} onClick={handleClickOpen}>
         View Reviews
       </Button> 
+      {isAuthenticated ? 
       <Button variant="outlined" color="secondary" onClick={deleteLocation} style={{margin: "2px"}}>
         Delete Location
-      </Button>
+      </Button> : "" }  
+      
       <Dialog open={open} onClose={handleClose} TransitionComponent={Transition} fullWidth={true} style={{margin: "2px"}}>
         <AppBar className={classes.appBar}>
           <Toolbar>
@@ -173,15 +181,19 @@ export default function FullScreenDialog(props) {
             <Typography align="right">
               <Button disabled={isViewButtonDisabled} color="primary" variant="contained" onClick={() => viewReviewContent(payload)}>View Data</Button>
             </Typography>
+
+            {isAuthenticated ? 
             <Typography align="right">
               <Button disabled={isDeleteButtonDisabled} color="secondary" variant="contained" onClick={deleteContent}>Delete Data</Button>
-            </Typography>
+            </Typography> : "" }
           </Toolbar>
         </AppBar>
         {dataArray?
             <div id="datapopup" className="popup">
                 <div style={{ height: 400, width: '100%' }}>
-                    {openDetailsBoolean ? <DataGrid checkboxSelection disableSelectionOnClick onRowClick={(e) => {console.log(e); onSelected(e);}} style={{width: '200%'}} rows={dataArray} columns={columns}  pageSize={5} rowsPerPageOptions={[5, 10]} disableColumnMenu={true} 
+                    {openDetailsBoolean ? 
+                    
+                    <DataGrid checkboxSelection={isAuthenticated} disableSelectionOnClick onRowClick={(e) => {onSelected(e);}} style={{width: '200%'}} rows={dataArray} columns={columns}  pageSize={5} rowsPerPageOptions={[5, 10]} disableColumnMenu={true} 
                     onSelectionModelChange={(e) => {
                       const selectedIDs = new Set(e.selectionModel);
                       const selectedRowData = dataArray.filter((row) =>
@@ -202,6 +214,7 @@ export default function FullScreenDialog(props) {
       summary={summary}
       description={description}
       date={date}
+      imageurl={imageurl}
       /> : null }
     </>
   );

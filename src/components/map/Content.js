@@ -22,14 +22,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Content({closeContent, location, summary, description, date}) {
+export default function Content({closeContent, imageurl, location, summary, description, date}) {
+  //console.log(imageurl)
   const classes = useStyles();
 
   const handleClose = () => {
     closeContent(false)
   };
 
-  console.log(description)
+  //console.log(description)
 
   return (
     <div>
@@ -47,8 +48,7 @@ export default function Content({closeContent, location, summary, description, d
             </Typography>
           </Toolbar>
         </AppBar>
-
-        <Typography variant="h4" align="center" >
+        <Typography variant="h3" align="center" style={{marginTop: "5%"}}>
               {summary}
         </Typography>
         <br />
@@ -56,8 +56,12 @@ export default function Content({closeContent, location, summary, description, d
             created on : {date}
         </Typography>
 
+        <Typography variant="h4" align="center" >
+          <img src={imageurl} alt="" srcset="" />
+        </Typography>
+
         <br />
-        <Typography variant="body2" align="center"  style={{whiteSpace: 'pre-line'}}>
+        <Typography variant="h5" align="center"  style={{whiteSpace: 'pre-line'}}>
               {description}
         </Typography>
         {/*<List>
