@@ -162,7 +162,7 @@ export default function FullScreenDialog(props) {
   return (
     <>
       <Button variant="outlined" color="primary" style={{margin: "2px"}} onClick={handleClickOpen}>
-        View Reviews
+        Review lists
       </Button> 
       {isAuthenticated ? 
       <Button variant="outlined" color="secondary" onClick={deleteLocation} style={{margin: "2px"}}>
@@ -179,7 +179,7 @@ export default function FullScreenDialog(props) {
               {locationData.locationName}
             </Typography>
             <Typography align="right">
-              <Button disabled={isViewButtonDisabled} color="primary" variant="contained" onClick={() => viewReviewContent(payload)}>View Data</Button>
+              <Button disabled={isViewButtonDisabled} color="primary" variant="contained" onClick={() => viewReviewContent(payload)}>View Review</Button>
             </Typography>
 
             {isAuthenticated ? 

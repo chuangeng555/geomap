@@ -1,4 +1,4 @@
-import "./App.css";
+
 
 //import { Account } from "./components/auth/Account";
 import Map from "./components/map/Usermap";
@@ -13,7 +13,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <div>
         <Router>
           <Switch>
           <Route path="/" exact component={Map}></Route>

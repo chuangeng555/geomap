@@ -55,13 +55,14 @@ export default function Content({closeContent, imageurl, location, summary, desc
         <Typography variant="h5" align="center" >
             created on : {date}
         </Typography>
+        <br />
 
         <Typography variant="h4" align="center" >
-          <img src={imageurl} alt="" srcset="" />
+          <img src={imageurl} width="720px" height="480px" alt=""  srcset="" />
         </Typography>
 
         <br />
-        <Typography variant="h5" align="center"  style={{whiteSpace: 'pre-line'}}>
+        <Typography variant="h5" align="center"  style={{whiteSpace: 'pre-line', marginBottom: '5%', marginLeft: '10%', marginRight: '10%'}}>
               {description}
         </Typography>
         {/*<List>

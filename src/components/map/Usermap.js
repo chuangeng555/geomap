@@ -3,15 +3,19 @@ import 'leaflet/dist/leaflet.css';
 import axios from "axios";
 import 'leaflet-draw/dist/leaflet.draw.css';
 import './style.css';
+import "../../App.css";
 import { Map, TileLayer, FeatureGroup, Marker } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import { VenueLocationIcon }  from './VenueLocationIcon';
 import FormPopup from './FormPopup.js';
 import Search from './Search.js';
-import SearchButton from './SearchButton.js';
 
 import ExistingMarkers from './ExistingMarkers';
 import Button from "@material-ui/core/Button";
+import { blue  } from '@material-ui/core/colors';
+import MenuIcon from '@material-ui/icons/Menu';
+import NavBar from './NavBar.js'; 
+import Container from "@material-ui/core/Container";
 
 
 const default_query = "revenue";
@@ -39,6 +43,7 @@ export class Usermap extends Component {
             createdMarkerPositon: null, 
             dbGeoData: [],
             descriptionChange: null, 
+            openMenu: false,
         }
     }
 
@@ -139,7 +144,26 @@ export class Usermap extends Component {
     onDescriptionChange = (event) => { 
         //console.log(event.target.value)
         this.setState({descriptionChange: event.target.value})
-      }
+    }
+
+    clickMenu = (event) => {
+        if (this.openMenu) {
+            this.setState ({
+                openMenu: false
+            })
+        } else {
+            this.setState ({
+                openMenu: true 
+            })
+        }
+    }
+
+    zoomToLocationFromSideBar = (value) => {
+        this.setState({
+            currentLocation: { lat: value.lat, lng: value.lng},
+            zoom: 30, 
+        })
+    }
 
 
 
@@ -150,13 +174,16 @@ export class Usermap extends Component {
         //const position = [1.3521, 103.8198]
 
         return (
-        <div>
+        <>      
+            <NavBar className="appBar" zoomToLocationFromSideBar={this.zoomToLocationFromSideBar} toggleSearchOpen={this.toggleSearchOpen} showSearch={this.state.showSearch} locationList={this.state.dbGeoData}/>    
+
+            <Container >    
             
-            <Map className="map" center={currentLocation} zoom={zoom}> 
+            <Map className="map App" center={currentLocation} zoom={zoom} zoomControl={false}> 
+
             {/*<Button className="search" onClick={this.toggleSearchOpen} 
             variant="contained"
 			color="primary"> Search </Button>*/}
-            <SearchButton toggleSearchOpen={this.toggleSearchOpen} showSearch={this.state.showSearch}/> 
 
             
             {this.state.showSearch ? 
@@ -176,8 +203,6 @@ export class Usermap extends Component {
             <FormPopup onClick={this.togglePopupClose} createdMarker= {createdMarkerPositon}/> :
 
             this.state.showPopup ?  <FormPopup onClick={this.togglePopupClose} nameValue={tempMarkerInfo} descriptionValue={markerDescription} createdMarker= {createdMarkerPositon} tempMarkerPosition={tempMarkerPosition} />  : null }
-
-
             {/*temporary b4 parse to database --> for show only... */}
             {this.state.showTempMarker ? 
             <Marker position={tempMarkerPosition} icon={VenueLocationIcon} >
@@ -217,7 +242,9 @@ export class Usermap extends Component {
 						/>
 					</FeatureGroup>
             </Map>
-        </div> 
+
+            </Container>
+        </> 
         )
 
     }

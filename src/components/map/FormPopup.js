@@ -67,7 +67,6 @@ export default class FormPopup extends Component {
   postDetails = (e) => {
     const ReactS3Client = new S3(config);
     ReactS3Client.uploadFile(this.state.tempFile, this.state.tempFileName).then((data) => {
-      //console.log(data)
       //console.log(data.location) // store in db for the url  
       if (data.status === 204){
           //console.log('success')
@@ -101,6 +100,7 @@ export default class FormPopup extends Component {
               //if exist b4, append to id
 
               let id = response.data.data[0]._id;
+              console.log(id)
 
               //console.log(id);
 
@@ -136,7 +136,7 @@ export default class FormPopup extends Component {
     const { onClick } = this.props; //onChange
 
     return (
-      <div>
+      <>
       <Dialog open={true} onClose={onClick} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">Fill in Review for :</DialogTitle>
         <DialogTitle id="form-dialog-title"><h4>{this.state.markerName}</h4></DialogTitle>
@@ -193,7 +193,7 @@ export default class FormPopup extends Component {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
     );
     
   }
