@@ -12,7 +12,7 @@ export default function ExistingMarkers(props) {
 	const { geo_venues } = props; 
 	const [buttonDisable, setButtonDisable] = useState(true);
 
-	console.log(geo_venues)
+	// console.log(geo_venues)
 	// constructor(props){
 	// 	super(props);
 	// 	this.state ={

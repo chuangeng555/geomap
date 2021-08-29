@@ -1,6 +1,8 @@
 # Map App
 
-In progress..... MVP is live, CLICK [HERE](http://geomap-frontend.s3-website-ap-southeast-1.amazonaws.com) ! 
+In progress..... MVP is live, CLICK [HERE](https://zealous-mclean-6a5e1b.netlify.app/) !
+
+Youtube video walkthrough, Click [HERE](https://www.youtube.com/watch?v=_mtZAzo00QU&ab_channel=tofuking209)
 
 Use case: To search for geo location and write your review on the location
 
@@ -14,18 +16,13 @@ Backend is developed using Express.js, MongoDB for database with the help of mon
 
 Click for [HERE](https://github.com/chuangeng555/geo-map-backend) for Backend codes
 
-Pending :
-
-- [ X ] - Open link in new tab to view full review based on selection in View Data.
-
-- [ ] - UIUX, typography issues in content
 
 ## Hosting :
 
 ### Front end
 
-Using AWS S3 bucket
+Using Netlify
 
 ### Backend
 
-AWS ECS with EC2, Amazon API Gateway
+Serverless framework, AWS Lambda , Amazon API Gateway
