@@ -84,7 +84,7 @@ export default function FullScreenDialog(props) {
 
   const deleteLocation = () => { 
     axios.delete(db + '/locations/' + id).then((response) => {
-      //console.log(response)
+      console.log(response)
     }).catch((error) => {
       console.log(error)
     })  

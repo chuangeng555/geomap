@@ -10,13 +10,14 @@ require('dotenv').config()
 const MarkerPopup = (props) => {
   const [formStatus, openFormStatus] = useState(false); 
   const { data } = props;
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated} = useAuth0();
 
   //buttonState
-
+  
   const closeForm = () => {
     openFormStatus(false)
   }
+
 
   return  (
   <Popup className="popup-marker" onClose = {() => { openFormStatus(false) }}>
@@ -26,7 +27,6 @@ const MarkerPopup = (props) => {
         <br/>
         <br/> 
         <LocationList locationData={data} id={data._id} />
-
         <br />
         {
           isAuthenticated ? 

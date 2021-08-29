@@ -23,14 +23,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function Content({closeContent, imageurl, location, summary, description, date}) {
-  //console.log(imageurl)
+  console.log(imageurl, summary)
   const classes = useStyles();
 
   const handleClose = () => {
     closeContent(false)
   };
 
-  //console.log(description)
 
   return (
     <div>

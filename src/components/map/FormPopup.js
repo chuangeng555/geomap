@@ -67,7 +67,7 @@ export default class FormPopup extends Component {
   postDetails = (e) => {
     const ReactS3Client = new S3(config);
     ReactS3Client.uploadFile(this.state.tempFile, this.state.tempFileName).then((data) => {
-      //console.log(data.location) // store in db for the url  
+      console.log(data.location) // store in db for the url  
       if (data.status === 204){
           //console.log('success')
           //send to db  
@@ -77,9 +77,10 @@ export default class FormPopup extends Component {
 
           axios.get(db + "/locations/geo/" + this.props.tempMarkerPosition.toString()).then((response) => {
 
+            // console.log(response.data.data.length)
             if (response.data.data.length === 0 ) { //if nvr exist b4 
               //post req
-              //console.log(response.data)
+              console.log(data.location)
               axios.post(db + "/locations", {
                 "locationName": this.state.markerName,
                 "geoLocation": this.props.tempMarkerPosition,
@@ -89,7 +90,7 @@ export default class FormPopup extends Component {
                     "imageUrl": data.location
                   }
                 }).then(function (response) {
-                  //console.log(response);
+                  // console.log(response);
                   window.location.reload(false);
                 })
                 .catch(function (error) {
@@ -109,7 +110,7 @@ export default class FormPopup extends Component {
                 "summary" : this.state.markerSummary,
                 "imageUrl": data.location
               }).then((response) => {
-                //console.log(response)
+                // console.log(response)
                 window.location.reload(false);
               }).catch((error) => {
                 console.log(error)

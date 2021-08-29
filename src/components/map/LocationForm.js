@@ -31,7 +31,7 @@ export default function FormDialog({closeForm, data}) {
   const handleSubmit = () => {
     const ReactS3Client = new S3(config);
     ReactS3Client.uploadFile(tempFile, tempFileName).then((res) => {
-      //console.log(res)
+      console.log(res)
       //console.log(res.location) // store in db for the url  
       if (res.status === 204){
           //console.log('success')
@@ -44,7 +44,7 @@ export default function FormDialog({closeForm, data}) {
       }).then((response) => {
         //console.log(response)
         handleClose()
-        window.location.reload(false);
+        // window.location.reload(false);
       }).catch((error) => {
         console.log(error)
       })

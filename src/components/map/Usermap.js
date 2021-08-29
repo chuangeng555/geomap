@@ -11,9 +11,9 @@ import FormPopup from './FormPopup.js';
 import Search from './Search.js';
 
 import ExistingMarkers from './ExistingMarkers';
-import Button from "@material-ui/core/Button";
-import { blue  } from '@material-ui/core/colors';
-import MenuIcon from '@material-ui/icons/Menu';
+// import Button from "@material-ui/core/Button";
+// import { blue  } from '@material-ui/core/colors';
+// import MenuIcon from '@material-ui/icons/Menu';
 import NavBar from './NavBar.js'; 
 import Container from "@material-ui/core/Container";
 
@@ -44,6 +44,8 @@ export class Usermap extends Component {
             dbGeoData: [],
             descriptionChange: null, 
             openMenu: false,
+            zoomFromSidebar: false,
+            zoomGeoLocationData: []
         }
     }
 
@@ -162,6 +164,8 @@ export class Usermap extends Component {
         this.setState({
             currentLocation: { lat: value.lat, lng: value.lng},
             zoom: 30, 
+            zoomFromSidebar: true, 
+            zoomGeoLocationData: value.data
         })
     }
 
@@ -184,7 +188,6 @@ export class Usermap extends Component {
             {/*<Button className="search" onClick={this.toggleSearchOpen} 
             variant="contained"
 			color="primary"> Search </Button>*/}
-
             
             {this.state.showSearch ? 
             <Search
@@ -209,7 +212,10 @@ export class Usermap extends Component {
             </Marker>
             : null }
 
-            {this.state.dbGeoData ? <ExistingMarkers geo_venues={this.state.dbGeoData} /> : null}
+            {this.state.dbGeoData ? <ExistingMarkers geo_venues={this.state.dbGeoData} zoomFromSidebar={this.state.zoomFromSidebar} zoomLocationData={this.state.zoomGeoLocationData}zoomLocationCoord={this.state.currentLocation} />: null}
+
+            {/* once zoom, open from here  */}
+
 
 
             <TileLayer

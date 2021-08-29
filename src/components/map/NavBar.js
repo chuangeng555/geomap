@@ -12,23 +12,17 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Button } from '@material-ui/core';
 import { useAuth0 } from "@auth0/auth0-react";
-import LogoutButton  from "../auth/Logout";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import Content from './Content';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MarkerPopup from './MarkerPopup';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -112,22 +106,14 @@ const filterOptions = createFilterOptions({
 export default function PrimarySearchAppBar({showSearch, toggleSearchOpen, locationList, zoomToLocationFromSideBar}) {
 
   const [searchList, setSearchList] = useState([]);
-  React.useEffect(() => {
-    setSearchList(locationList.map((m) => {
-      // console.log(m.locationName)
-      let dataList = m.locationData
-      dataList.map((d) => d.locationName = m.locationName)
-      console.log(dataList)
-      return dataList
-    }).flat(1))
-  }, [locationList])
+
   const classes = useStyles();
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, logout } = useAuth0();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [selectedData, setSelectedData] = useState({});
+  // const [selectedData, setSelectedData] = useState({});
   const [openContent, setOpenContent] = useState(false);
   const [contentValue, setContentValue] = useState({});
   const [state, setState] = React.useState({
@@ -136,8 +122,20 @@ export default function PrimarySearchAppBar({showSearch, toggleSearchOpen, locat
     bottom: false,
     right: false,
   });
-  const [locationPopup, setLocationPopup] = useState(false);
-  const [selectedSideBarLocation, setSelectedSideBarLocation] = useState(null);
+  // const [locationPopup, setLocationPopup] = useState(false);
+  // const [selectedSideBarLocation, setSelectedSideBarLocation] = useState(null);
+
+
+  React.useEffect(() => {
+
+    // console.log(user, isAuthenticated)
+    setSearchList(locationList.map((m) => {
+      // console.log(m.locationName)
+      let dataList = m.locationData
+      dataList.map((d) => d.locationName = m.locationName)
+      return dataList
+    }).flat(1))
+  }, [locationList])
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -160,9 +158,9 @@ export default function PrimarySearchAppBar({showSearch, toggleSearchOpen, locat
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+  // const handleMobileMenuOpen = (event) => {
+  //   setMobileMoreAnchorEl(event.currentTarget);
+  // };
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -236,6 +234,7 @@ export default function PrimarySearchAppBar({showSearch, toggleSearchOpen, locat
   }
 
 
+
   const passDataToContentPage = (selectedValue) => {
     
     if (selectedValue) {
@@ -245,11 +244,14 @@ export default function PrimarySearchAppBar({showSearch, toggleSearchOpen, locat
   }
 
   const zoomToLocation = (location) => {
-    console.log(location)
-    zoomToLocationFromSideBar({lat: location.geoLocation[0], lng: location.geoLocation[1]})
+    // console.log(location)
+    zoomToLocationFromSideBar({lat: location.geoLocation[0], lng: location.geoLocation[1], data: location})
 
-    setSelectedSideBarLocation(location)
-    setLocationPopup(true);
+    // setSelectedSideBarLocation(location)
+    // setLocationPopup(true);
+
+    //open up the location popup 
+
   }
   
   const list = (anchor) => (
@@ -353,18 +355,22 @@ export default function PrimarySearchAppBar({showSearch, toggleSearchOpen, locat
             </IconButton>
 
             {
-                !isAuthenticated ? "" :
+                isAuthenticated ? 
                 <IconButton
                 edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                // aria-label="account of current user"
+                // aria-controls={menuId}
+                // aria-haspopup="true"
+                // onClick={handleProfileMenuOpen}
+                onClick={() =>
+                  logout({
+                    returnTo: window.location.origin,
+                  })}
                 color="inherit"
             >
                 <ExitToAppIcon />
                 {/* <AccountCircle /> */}
-            </IconButton>
+            </IconButton> : ""
             }
 
           </div>
