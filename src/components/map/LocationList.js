@@ -14,6 +14,9 @@ import Content from './Content';
 import axios from "axios";
 const db = process.env.REACT_APP_DB;
 
+
+
+
 const columns = [
   { field: 'summary', headerName: 'Summary',  width: 350 },
   { field: 'create_date', headerName: 'Date Created', width: 240 }
@@ -35,6 +38,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function FullScreenDialog(props) {
+  
   const {locationData, id } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -66,9 +70,9 @@ export default function FullScreenDialog(props) {
     if (dataArray.length <= 1 || dataArray.length === selectedData.length) { //if less than 1 
       //console.log(id)
       axios.delete(db + '/locations/' + id).then((response) => {
-        console.log(response)
+        // console.log(response)
       }).catch((error) => {
-        console.log(error)
+        // console.log(error)
       })     
     } else {
       let filteredListID = selectedData.map((s) => s.id)
@@ -84,9 +88,9 @@ export default function FullScreenDialog(props) {
 
   const deleteLocation = () => { 
     axios.delete(db + '/locations/' + id).then((response) => {
-      console.log(response)
+      // console.log(response)
     }).catch((error) => {
-      console.log(error)
+      // console.log(error)
     })  
     window.location.reload(false);
   }
@@ -147,11 +151,20 @@ export default function FullScreenDialog(props) {
     setDescription(e.row.description)
     setDate(e.row.create_date)
     setImageUrl(e.row.imageUrl)
+
+    openAddReview(false)
+  }
+
+  const openAddReview = (closeReviewButton) => {
+    props.customProp(closeReviewButton)
   }
 
   const closeContent = (e) => {
     setOpenContent(false)
     setisViewButtonDisabled(true)
+
+    openAddReview(true)
+
   }
 
   const onSelected = (e) => {
@@ -185,7 +198,8 @@ export default function FullScreenDialog(props) {
             {isAuthenticated ? 
             <Typography align="right">
               <Button disabled={isDeleteButtonDisabled} color="secondary" variant="contained" onClick={deleteContent}>Delete Data</Button>
-            </Typography> : "" }
+            </Typography> 
+            : "" }
           </Toolbar>
         </AppBar>
         {dataArray?

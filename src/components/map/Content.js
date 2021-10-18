@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function Content({closeContent, imageurl, location, summary, description, date}) {
-  console.log(imageurl, summary)
+  // console.log(imageurl, summary)
   const classes = useStyles();
 
   const handleClose = () => {
@@ -64,15 +64,6 @@ export default function Content({closeContent, imageurl, location, summary, desc
         <Typography variant="h5" align="center"  style={{whiteSpace: 'pre-line', marginBottom: '5%', marginLeft: '10%', marginRight: '10%'}}>
               {description}
         </Typography>
-        {/*<List>
-          <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-          </ListItem>
-        </List>*/}
       </Dialog>
     </div>
   );

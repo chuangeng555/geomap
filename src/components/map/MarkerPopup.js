@@ -26,7 +26,7 @@ const MarkerPopup = (props) => {
       {"  "}
         <br/>
         <br/> 
-        <LocationList locationData={data} id={data._id} />
+        <LocationList locationData={data} id={data._id} customProp={props.customProp}/>
         <br />
         {
           isAuthenticated ? 

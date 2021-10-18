@@ -3,7 +3,7 @@
 //import { Account } from "./components/auth/Account";
 import Map from "./components/map/Usermap";
 //import Status from "./components/auth/Status";
-import Login from './components/auth/Login'; 
+// import Login from './components/auth/Login'; 
 //import ChangePassword from './components/auth/ChangePassword';
 //import { map } from "leaflet";
 
@@ -19,7 +19,7 @@ function App() {
           <Route path="/" exact component={Map}></Route>
           </Switch>
           <Switch>
-          <Route path="/login" exact component={Login}></Route>
+          {/* <Route path="/login" exact component={Login}></Route> */}
           </Switch>
           <Switch>
           {/*<Route path="/changePassword" exact component={ChangePassword}></Route>*/}

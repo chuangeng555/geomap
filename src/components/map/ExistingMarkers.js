@@ -46,7 +46,8 @@ export default function ExistingMarkers(props) {
 					setButtonDisable(false)
 				}
 			>
-				<MarkerPopup data={venue} buttonState={buttonDisable}
+				<MarkerPopup data={venue} buttonState={buttonDisable} 
+				customProp={props.customProp}
 				/>
 			</Marker>
 

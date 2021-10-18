@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
   root: {
-    margin: 0,
+    margin: 30,
     padding: theme.spacing(2),
   },
   closeButton: {

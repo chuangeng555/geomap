@@ -11,10 +11,10 @@ import FormPopup from './FormPopup.js';
 import Search from './Search.js';
 
 import ExistingMarkers from './ExistingMarkers';
-// import Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 // import { blue  } from '@material-ui/core/colors';
 // import MenuIcon from '@material-ui/icons/Menu';
-import NavBar from './NavBar.js'; 
+// import NavBar from './NavBar.js'; 
 import Container from "@material-ui/core/Container";
 
 
@@ -45,7 +45,8 @@ export class Usermap extends Component {
             descriptionChange: null, 
             openMenu: false,
             zoomFromSidebar: false,
-            zoomGeoLocationData: []
+            zoomGeoLocationData: [],
+            openAddReview: true
         }
     }
 
@@ -169,25 +170,36 @@ export class Usermap extends Component {
         })
     }
 
+    handleCloseAddReview = (value ) => {
+        // console.log(value);
+        this.setState({
+            openAddReview: value
+        })
+
+    }
+
 
 
 
     render () {
         
-        const {currentLocation, zoom, searchTerm, result, tempMarkerPosition, tempMarkerInfo, markerDescription, createdMarkerPositon} = this.state;
+        const {openAddReview, currentLocation, zoom, searchTerm, result, tempMarkerPosition, tempMarkerInfo, markerDescription, createdMarkerPositon} = this.state;
         //const position = [1.3521, 103.8198]
 
         return (
         <>      
-            <NavBar className="appBar" zoomToLocationFromSideBar={this.zoomToLocationFromSideBar} toggleSearchOpen={this.toggleSearchOpen} showSearch={this.state.showSearch} locationList={this.state.dbGeoData}/>    
+            {/* <NavBar className="appBar" zoomToLocationFromSideBar={this.zoomToLocationFromSideBar} toggleSearchOpen={this.toggleSearchOpen} showSearch={this.state.showSearch} locationList={this.state.dbGeoData}/>     */}
 
             <Container >    
             
             <Map className="map App" center={currentLocation} zoom={zoom} zoomControl={false}> 
 
-            {/*<Button className="search" onClick={this.toggleSearchOpen} 
-            variant="contained"
-			color="primary"> Search </Button>*/}
+            {
+                openAddReview ? 
+                <Button className="search" onClick={this.toggleSearchOpen} 
+                variant="contained"
+                color="primary"> Add Review </Button>  : "" 
+            }
             
             {this.state.showSearch ? 
             <Search
@@ -212,7 +224,7 @@ export class Usermap extends Component {
             </Marker>
             : null }
 
-            {this.state.dbGeoData ? <ExistingMarkers geo_venues={this.state.dbGeoData} zoomFromSidebar={this.state.zoomFromSidebar} zoomLocationData={this.state.zoomGeoLocationData}zoomLocationCoord={this.state.currentLocation} />: null}
+            {this.state.dbGeoData ? <ExistingMarkers geo_venues={this.state.dbGeoData} zoomFromSidebar={this.state.zoomFromSidebar} zoomLocationData={this.state.zoomGeoLocationData}zoomLocationCoord={this.state.currentLocation} customProp={this.handleCloseAddReview}/>: null}
 
             {/* once zoom, open from here  */}
 
